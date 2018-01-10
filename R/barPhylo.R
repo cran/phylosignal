@@ -2,7 +2,7 @@
 
 #' Plots of Traits Values along a Phylogeny
 #'
-#' This function provide a general interface to plot \code{phylo4d} object
+#' This function provides a general interface to plot \code{phylo4d} object
 #' (i.e. phylogenetic tree and data).
 #' 
 #' @param p4d a \code{phylo4d} object.
@@ -100,7 +100,7 @@ multiplot.phylo4d <- function(p4d, trait = names(tdata(p4d)), center = TRUE, sca
                      grid.lty = "dashed", ...){
 
                       
-  p4 <- extractTree(p4d)
+  p4 <- phylobase::extractTree(p4d)
   phy <- as(p4, "phylo")
   if(tree.ladderize){
     phy <- ladderize(phy)
@@ -148,36 +148,36 @@ multiplot.phylo4d <- function(p4d, trait = names(tdata(p4d)), center = TRUE, sca
       data.xlim <- matrix(rep(NA, n.traits * 2), nrow = 2,
                          dimnames = list(c("xlim.min", "xlim.max"), trait))
       if(!is.null(error.bar.inf) & !is.null(error.bar.sup)){
-        data.xlim[1, ] <- floor(min(arrow.inf, arrow.sup))
-        data.xlim[2, ] <- ceiling(max(arrow.inf, arrow.sup))
+        data.xlim[1, ] <- floor(min(arrow.inf, arrow.sup, na.rm = TRUE))
+        data.xlim[2, ] <- ceiling(max(arrow.inf, arrow.sup, na.rm = TRUE))
       } else if(!is.null(error.bar.inf)){
-        data.xlim[1, ] <- floor(min(arrow.inf))
-        data.xlim[2, ] <- ceiling(max(arrow.inf))
+        data.xlim[1, ] <- floor(min(arrow.inf, na.rm = TRUE))
+        data.xlim[2, ] <- ceiling(max(arrow.inf, na.rm = TRUE))
       } else if(!is.null(error.bar.sup)){
-        data.xlim[1, ] <- floor(min(arrow.sup))
-        data.xlim[2, ] <- ceiling(max(arrow.sup))
+        data.xlim[1, ] <- floor(min(arrow.sup, na.rm = TRUE))
+        data.xlim[2, ] <- ceiling(max(arrow.sup, na.rm = TRUE))
       } else {
-        data.xlim[1, ] <- floor(min(X))
-        data.xlim[2, ] <- ceiling(max(X))
+        data.xlim[1, ] <- floor(min(X, na.rm = TRUE))
+        data.xlim[2, ] <- ceiling(max(X, na.rm = TRUE))
       }
     } else {
       data.xlim <- matrix(NA, nrow = 2, ncol = n.traits,
                          dimnames = list(c("xlim.min", "xlim.max"), trait))
-      data.xlim[1, ] <- apply(X, 2, min)
-      data.xlim[1, apply(X, 2, min) * apply(X, 2, max) > 0 & apply(X, 2, min) > 0] <- 0
-      data.xlim[2, ] <- apply(X, 2, max)
-      data.xlim[2, apply(X, 2, min) * apply(X, 2, max) > 0 & apply(X, 2, max) < 0] <- 0
+      data.xlim[1, ] <- apply(X, 2, min, na.rm = TRUE)
+      data.xlim[1, apply(X, 2, min, na.rm = TRUE) * apply(X, 2, max, na.rm = TRUE) > 0 & apply(X, 2, min, na.rm = TRUE) > 0] <- 0
+      data.xlim[2, ] <- apply(X, 2, max, na.rm = TRUE)
+      data.xlim[2, apply(X, 2, min, na.rm = TRUE) * apply(X, 2, max, na.rm = TRUE) > 0 & apply(X, 2, max, na.rm = TRUE) < 0] <- 0
       if(!is.null(error.bar.inf) & !is.null(error.bar.sup)){
-        data.xlim[1, ] <- apply(cbind(apply(arrow.inf, 2, min), apply(arrow.sup, 2, min)), 1, min)
-        data.xlim[2, ] <- apply(cbind(apply(arrow.inf, 2, max), apply(arrow.sup, 2, max)), 1, max)
+        data.xlim[1, ] <- apply(cbind(apply(arrow.inf, 2, min, na.rm = TRUE), apply(arrow.sup, 2, min)), 1, min, na.rm = TRUE)
+        data.xlim[2, ] <- apply(cbind(apply(arrow.inf, 2, max, na.rm = TRUE), apply(arrow.sup, 2, max)), 1, max, na.rm = TRUE)
       } else {
         if(!is.null(error.bar.inf)){
-          data.xlim[1, ] <- apply(cbind(apply(arrow.inf, 2, min), data.xlim[1, ]), 1, min)
-          data.xlim[2, ] <- apply(cbind(apply(arrow.inf, 2, max), data.xlim[2, ]), 1, max)
+          data.xlim[1, ] <- apply(cbind(apply(arrow.inf, 2, min, na.rm = TRUE), data.xlim[1, ]), 1, min, na.rm = TRUE)
+          data.xlim[2, ] <- apply(cbind(apply(arrow.inf, 2, max, na.rm = TRUE), data.xlim[2, ]), 1, max, na.rm = TRUE)
         }
         if(!is.null(error.bar.sup)){
-          data.xlim[1, ] <- apply(cbind(apply(arrow.sup, 2, min), data.xlim[1, ]), 1, min)
-          data.xlim[2, ] <- apply(cbind(apply(arrow.sup, 2, max), data.xlim[2, ]), 1, max)
+          data.xlim[1, ] <- apply(cbind(apply(arrow.sup, 2, min, na.rm = TRUE), data.xlim[1, ]), 1, min, na.rm = TRUE)
+          data.xlim[2, ] <- apply(cbind(apply(arrow.sup, 2, max, na.rm = TRUE), data.xlim[2, ]), 1, max, na.rm = TRUE)
         }
       }
     }
@@ -216,6 +216,10 @@ multiplot.phylo4d <- function(p4d, trait = names(tdata(p4d)), center = TRUE, sca
     
   }
   
+  if(!is.null(error.bar.inf) | !is.null(error.bar.sup)){
+    error.bar.col <- .orderGrArg(error.bar.col, n.tips = n.tips, n.traits = n.traits,
+                           new.order = new.order, tips = tips, default = 1)
+  }
 
   if(is.null(tip.labels)){
     tip.labels <- tips
@@ -392,7 +396,7 @@ multiplot.phylo4d <- function(p4d, trait = names(tdata(p4d)), center = TRUE, sca
                                    data.xlim = data.xlim,
                                    tip.xlim = tip.xlim,
                                    ylim = ylim, par.mar0 = par.mar0), 
-           envir = .PlotPhyloEnv)
+           envir = ape::.PlotPhyloEnv)
     layout(1)
   }
   
@@ -411,7 +415,7 @@ multiplot.phylo4d <- function(p4d, trait = names(tdata(p4d)), center = TRUE, sca
     plot.phylo(phy, type = tree.type, show.tip.label = FALSE,
                x.lim = tree.xlim * (1/tree.ratio), y.lim = NULL,
                no.margin = TRUE, open.angle = tree.open.angle, rotate.tree = 0, ...)
-    lp <- get("last_plot.phylo", envir = .PlotPhyloEnv)
+    lp <- get("last_plot.phylo", envir = ape::.PlotPhyloEnv)
         
     length.phylo <- max(sqrt(lp$xx^2 + lp$yy^2))
     if(show.tip){
@@ -752,7 +756,7 @@ multiplot.phylo4d <- function(p4d, trait = names(tdata(p4d)), center = TRUE, sca
 #'@rdname focus
 #'@export
 focusTraits <- function(x){
-  lp <- get("last_barplotp4d", envir = .PlotPhyloEnv)
+  lp <- get("last_barplotp4d", envir = ape::.PlotPhyloEnv)
   if(lp$plot.type == "gridplot"){
     x <- 1
   }
@@ -761,6 +765,7 @@ focusTraits <- function(x){
   layout(lp$layout)
   par(mar = c(5, 1, 4, 0))
   fig <- unlist(lp$fig.traits[x])
+  fig[fig < 0] <- 0
   par(fig = fig)
   plot.window(xlim = lp$data.xlim[, x], ylim = lp$ylim)
 }
@@ -768,12 +773,13 @@ focusTraits <- function(x){
 #'@rdname focus
 #'@export
 focusTree <- function(){
-  lp <- get("last_barplotp4d", envir = .PlotPhyloEnv)
+  lp <- get("last_barplotp4d", envir = ape::.PlotPhyloEnv)
   par(new = TRUE)
   plot.new()
   layout(lp$layout)
   par(mar = c(5, 1, 4, 0))
   fig <- unlist(lp$fig.tree)
+  fig[fig < 0] <- 0
   par(fig = fig)
   plot.window(xlim = lp$tree.xlim, ylim = lp$ylim)
 }
@@ -781,7 +787,7 @@ focusTree <- function(){
 #'@rdname focus
 #'@export
 focusTips <- function(){
-  lp <- get("last_barplotp4d", envir = .PlotPhyloEnv)
+  lp <- get("last_barplotp4d", envir = ape::.PlotPhyloEnv)
   if(!lp$show.tip){
     stop("No tip labels on the figure")
   } else {
@@ -790,6 +796,7 @@ focusTips <- function(){
     layout(lp$layout)
     par(mar = c(5, 1, 4, 0))
     fig <- unlist(lp$fig.tip)
+    fig[fig < 0] <- 0
     par(fig = fig)
     plot.window(xlim = lp$tip.xlim, ylim = lp$ylim)
   }
@@ -798,7 +805,7 @@ focusTips <- function(){
 #'@rdname focus
 #'@export
 focusStop <- function(){
-  lp <- get("last_barplotp4d", envir = .PlotPhyloEnv)
+  lp <- get("last_barplotp4d", envir = ape::.PlotPhyloEnv)
   layout(1)
   par(mar = lp$par.mar0)
 }
