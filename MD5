@@ -1,4 +1,4 @@
-7b10b6075fa997cd2932cdbc21ed8e7d *DESCRIPTION
+ead9dc3dc4e962dcfa079fdd808083ad *DESCRIPTION
 a99953f7d790f1c7958ccb905ed44801 *NAMESPACE
 72204e1ee496e6535baa0765eb10329d *R/RcppExports.R
 6b897b593de6d3aa22fd95a62cd8ad16 *R/barPhylo.R
@@ -15,15 +15,15 @@ ea337afda6c48363a8269976b2256863 *R/phyloSimSignal.R
 3372a1438ac5e29e83d676f0835e04bd *R/readp4d.R
 e0ae34203c88c65a0f3a91dfb995b622 *R/utilities.R
 b5aba6f91af4e2dcd3be882d2b23980c *README.md
-e97d0d8f55d10ee77704caf1830724fc *build/vignette.rds
+5ff24205d2ada2ec588bde08ec362f24 *build/vignette.rds
 75b74e4a037b0e423432a720b1826e61 *data/navic.RData
 7e92d3ef9519568484b4e01173aa96ca *inst/CITATION
-f3dd242d6a885040fa0fac0a183327ef *inst/doc/Basics.R
-c53904422c26790e96b72a3f1b2e7762 *inst/doc/Basics.Rmd
-f37f4a58d2567ec53a2f088c99120221 *inst/doc/Basics.html
-50f6ece0caffa17ddf5a88bd9dfae748 *inst/doc/Demo_plots.R
-0a375d5fc8da3914c14eaea221902433 *inst/doc/Demo_plots.Rmd
-95d108ee2cc1b875392a46b19ae11938 *inst/doc/Demo_plots.html
+36c67f8da47b0eb3da7c0c518db92c3e *inst/doc/Basics.R
+aa088e9cfac54a199ca5fd05247789ae *inst/doc/Basics.Rmd
+3c55d10cdf00040cc68fdbc43c80e613 *inst/doc/Basics.html
+e07e6b1e0f89f5d1a9dba10ea2f54cb3 *inst/doc/Demo_plots.R
+408516d6d883518f47b132a3c11dbea5 *inst/doc/Demo_plots.Rmd
+3be3d052820026d676f03dfc8d686753 *inst/doc/Demo_plots.html
 1995fa6089ce8d023f74f753d39aec96 *man/barplot.phylo4d.Rd
 b7c12dda1b0c35b7d2b7a7bc40cdc4cb *man/descentsNames.Rd
 6dd14bb19c3b9faffaf495e246de6e46 *man/directDescents.Rd
@@ -72,5 +72,5 @@ c7283d69168a7e954f6c781c55061ac3 *man/print.graphclust.Rd
 8111141f3032eaeb3d40b18c23950c41 *src/signaltest.cpp
 f61f0da3c1b45053195ef38f6954c18a *tests/testthat.R
 b815255b84bc08f65badbf46e1de48b2 *tests/testthat/tests_indices.R
-c53904422c26790e96b72a3f1b2e7762 *vignettes/Basics.Rmd
-0a375d5fc8da3914c14eaea221902433 *vignettes/Demo_plots.Rmd
+aa088e9cfac54a199ca5fd05247789ae *vignettes/Basics.Rmd
+408516d6d883518f47b132a3c11dbea5 *vignettes/Demo_plots.Rmd
