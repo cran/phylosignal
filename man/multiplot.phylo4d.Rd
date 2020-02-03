@@ -10,13 +10,13 @@ multiplot.phylo4d(p4d, trait = names(tdata(p4d)), center = TRUE,
   tree.open.angle = 0, tree.open.crown = TRUE, show.tip = TRUE,
   tip.labels = NULL, tip.col = "black", tip.cex = 1, tip.font = 3,
   tip.adj = 0, data.xlim = NULL, bar.lwd = 10, bar.col = "grey35",
-  show.data.axis = TRUE, dot.col = "black", dot.pch = 20, dot.cex = 2,
-  cell.col = white2red(100), show.color.scale = TRUE, show.trait = TRUE,
-  trait.labels = NULL, trait.col = "black", trait.cex = 1,
-  trait.font = 1, trait.bg.col = "grey90", error.bar.sup = NULL,
-  error.bar.inf = NULL, error.bar.col = 1, show.box = FALSE,
-  grid.vertical = TRUE, grid.horizontal = FALSE, grid.col = "grey25",
-  grid.lty = "dashed", ...)
+  show.data.axis = TRUE, dot.col = "black", dot.pch = 20,
+  dot.cex = 2, cell.col = white2red(100), show.color.scale = TRUE,
+  show.trait = TRUE, trait.labels = NULL, trait.col = "black",
+  trait.cex = 1, trait.font = 1, trait.bg.col = "grey90",
+  error.bar.sup = NULL, error.bar.inf = NULL, error.bar.col = 1,
+  show.box = FALSE, grid.vertical = TRUE, grid.horizontal = FALSE,
+  grid.col = "grey25", grid.lty = "dashed", ...)
 }
 \arguments{
 \item{p4d}{a \code{phylo4d} object.}
@@ -118,7 +118,9 @@ Columns and rows names must match with traits and tips labels, respectively.}
 \item{error.bar.inf}{a matrix giving the inferior limit for error bars.
 Columns and rows names must match with traits and tips labels, respectively.}
 
-\item{error.bar.col}{a vector of R colors to draw error bars.}
+\item{error.bar.col}{a vector of R colors to use for the bars.
+Recycled along the tips, reapeated for each trait.
+The user can also provide a matrix for a finer tuning (see Details)}
 
 \item{show.box}{a logical indicating whether a box should be drawn around the plots.}
 
